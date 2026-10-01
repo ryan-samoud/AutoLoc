@@ -1,0 +1,4 @@
+tn\esprit\autoloc\AutolocApiApplication.class
+tn\esprit\autoloc\domain\StatutVehicule.class
+tn\esprit\autoloc\domain\CategorieVehicule.class
+tn\esprit\autoloc\domain\Vehicule.class

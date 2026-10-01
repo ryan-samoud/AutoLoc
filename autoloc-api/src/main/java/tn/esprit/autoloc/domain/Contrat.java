@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.math.*;
 import java.time.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "contrat")
@@ -24,4 +25,10 @@ public class Contrat {
 
     @Column(nullable = false)
     private boolean valide;
+
+    @OneToMany(mappedBy = "contrat", fetch = FetchType.EAGER)
+    private Set<Paiement> paiement;
+
+    @OneToOne(mappedBy = "contrat")
+    private Reservation reservation;
 }
