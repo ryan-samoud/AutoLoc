@@ -132,12 +132,17 @@ public class AgenceTests {
 
         int currentPage = 0;
         Page<Agence> page;
+        boolean first = true;
 
         do {
             Pageable pageable = PageRequest.of(currentPage, 2, Sort.by("idAgence").descending());
             page = fullAgenceRepository.findAll(pageable);
 
-            sb.append("Nombre total de pages : ").append(page.getTotalPages()).append("\n");
+            if (first) {
+                sb.append("Nombre total de pages : ").append(page.getTotalPages()).append("\n");
+                first = false;
+            }
+
             sb.append("Page en cours : ").append(page.getNumber()).append("\n");
 
             for (Agence agence : page.getContent()) {
