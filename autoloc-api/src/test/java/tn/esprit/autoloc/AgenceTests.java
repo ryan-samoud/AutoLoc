@@ -10,12 +10,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.CategorieVehicule;
 import tn.esprit.autoloc.domain.StatutVehicule;
 import tn.esprit.autoloc.domain.Vehicule;
 import tn.esprit.autoloc.repository.IAgenceRepository;
+import tn.esprit.autoloc.service.IAgenceService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,6 +34,9 @@ public class AgenceTests {
 
     @Autowired
     private IAgenceRepository fullAgenceRepository;
+
+    @Autowired
+    private IAgenceService agenceService;
 
     private void AddAgence(CrudRepository<Agence,Long> repository){
         Agence agence= new Agence();
@@ -154,5 +159,21 @@ public class AgenceTests {
 
         Assert.fail(sb.toString());
     }
+
+    @Test
+    public void createAgence() {
+        Agence agence = Agence.builder()
+                .nom("nom")
+                .telephone("95811925")
+                .adresse("adr")
+                .ville("Tunis")
+                .build();
+        Agence created = agenceService.create(agence);
+        org.junit.Assert.assertNotNull(created);
+        org.junit.Assert.assertNotNull(created.getIdAgence());
+
+
+    }
 }
+@Repository
 interface AgenceRepositoryMock extends CrudRepository<Agence, Long> {}

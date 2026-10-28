@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Agence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +30,7 @@ public class Agence {
     @Column(nullable = false, length = 20)
     private String telephone;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "agence", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Vehicule> vehicule;
 

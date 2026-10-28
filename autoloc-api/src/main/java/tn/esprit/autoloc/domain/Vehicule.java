@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.*;
@@ -36,6 +37,7 @@ public class Vehicule {
     @Column(nullable = false, length = 20)
     private StatutVehicule statut;
 
+    @JsonBackReference
     @ManyToOne
     private Agence agence;
 
