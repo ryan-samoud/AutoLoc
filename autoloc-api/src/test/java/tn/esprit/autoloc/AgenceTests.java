@@ -20,8 +20,6 @@ import tn.esprit.autoloc.repository.IAgenceRepository;
 import tn.esprit.autoloc.service.IAgenceService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -96,14 +94,10 @@ public class AgenceTests {
 
 
     private void loadAgence(CrudRepository<Agence,Long> repository,String label) {
-        Set<Agence> agences = new HashSet<>();
         StringBuilder sb = new StringBuilder();
         sb.append("TYPE =").append(label).append("\n");
 
-        basicAgenceRepository.findAll().forEach(agence -> {
-            agences.add(agence);
-            sb.append(Builder.build(agence));
-        });
+        repository.findAll().forEach(agence -> sb.append(Builder.build(agence)));
 
         Assert.fail(sb.toString());
     }

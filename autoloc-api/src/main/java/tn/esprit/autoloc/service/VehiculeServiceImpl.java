@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.autoloc.Utils;
 import tn.esprit.autoloc.calcul.OffreStrategy;
 import tn.esprit.autoloc.calcul.VehiculeOffre;
-import tn.esprit.autoloc.domain.StatutVehicule;
 import tn.esprit.autoloc.domain.Vehicule;
 import tn.esprit.autoloc.exception.ConflictException;
 import tn.esprit.autoloc.exception.ResourceNotFoundException;

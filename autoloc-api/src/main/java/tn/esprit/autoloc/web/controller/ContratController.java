@@ -3,7 +3,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,20 +28,16 @@ public class ContratController {
     }
 
     @Operation(summary = "Consulter un contrat")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Contrat trouvé"),
-            @ApiResponse(responseCode = "404", description = "Contrat introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Contrat trouvé")
+    @ApiResponse(responseCode = "404", description = "Contrat introuvable")
     @GetMapping("/{id}")
     public Contrat findById(@Parameter(description = "Identifiant") @PathVariable Long id) {
         return contratService.findById(id);
     }
 
     @Operation(summary = "Ajouter un contrat")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Contrat créé"),
-            @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
-    })
+    @ApiResponse(responseCode = "201", description = "Contrat créé")
+    @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Contrat create(@RequestBody Contrat contrat) {
@@ -50,11 +45,9 @@ public class ContratController {
     }
 
     @Operation(summary = "Modifier un contrat")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Contrat modifié"),
-            @ApiResponse(responseCode = "400", description = "Données invalides"),
-            @ApiResponse(responseCode = "404", description = "Contrat introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Contrat modifié")
+    @ApiResponse(responseCode = "400", description = "Données invalides")
+    @ApiResponse(responseCode = "404", description = "Contrat introuvable")
     @PutMapping("/{id}")
     public Contrat update(@Parameter(description = "Identifiant") @PathVariable Long id,
                           @RequestBody Contrat contrat) {
@@ -62,10 +55,8 @@ public class ContratController {
     }
 
     @Operation(summary = "Supprimer un contrat")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Contrat supprimé"),
-            @ApiResponse(responseCode = "404", description = "Contrat introuvable")
-    })
+    @ApiResponse(responseCode = "204", description = "Contrat supprimé")
+    @ApiResponse(responseCode = "404", description = "Contrat introuvable")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@Parameter(description = "Identifiant") @PathVariable Long id) {

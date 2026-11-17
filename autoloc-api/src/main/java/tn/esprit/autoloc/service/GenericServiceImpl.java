@@ -6,13 +6,13 @@ import tn.esprit.autoloc.exception.ResourceNotFoundException;
 
 import java.util.List;
 @RequiredArgsConstructor
-public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID> {
+public abstract class GenericServiceImpl<T, I> implements IGenericService<T, I> {
 
-    protected final JpaRepository<T, ID> repository;
+    protected final JpaRepository<T, I> repository;
 
 
     protected abstract String getEntityName();
-    protected abstract ID getId(T entity);
+    protected abstract I getId(T entity);
     protected abstract void setFields(T source, T target);
 
     @Override
@@ -27,7 +27,7 @@ public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID
     }
 
     @Override
-    public T findById(ID id) {
+    public T findById(I id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(getEntityName(), id.toString()));
     }
@@ -38,7 +38,7 @@ public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID
     }
 
     @Override
-    public T update(ID id, T entity) {
+    public T update(I id, T entity) {
         T existing = findById(id);
         if (!check(entity, false)) {
             throw new IllegalArgumentException("les champs obligatoires de " + getEntityName() + " sont invalides");
@@ -48,7 +48,7 @@ public abstract class GenericServiceImpl<T, ID> implements IGenericService<T, ID
     }
 
     @Override
-    public void deleteById(ID id) {
+    public void deleteById(I id) {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException(getEntityName(), id.toString());
         }

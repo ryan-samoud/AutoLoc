@@ -3,7 +3,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,20 +28,16 @@ public class EmployeController {
     }
 
     @Operation(summary = "Consulter un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Employé trouvé"),
-            @ApiResponse(responseCode = "404", description = "Employé introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Employé trouvé")
+    @ApiResponse(responseCode = "404", description = "Employé introuvable")
     @GetMapping("/{id}")
     public Employe findById(@Parameter(description = "Identifiant") @PathVariable Long id) {
         return employeService.findById(id);
     }
 
     @Operation(summary = "Ajouter un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Employé créé"),
-            @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
-    })
+    @ApiResponse(responseCode = "201", description = "Employé créé")
+    @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employe create(@RequestBody Employe employe) {
@@ -50,11 +45,9 @@ public class EmployeController {
     }
 
     @Operation(summary = "Modifier un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Employé modifié"),
-            @ApiResponse(responseCode = "400", description = "Données invalides"),
-            @ApiResponse(responseCode = "404", description = "Employé introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Employé modifié")
+    @ApiResponse(responseCode = "400", description = "Données invalides")
+    @ApiResponse(responseCode = "404", description = "Employé introuvable")
     @PutMapping("/{id}")
     public Employe update(@Parameter(description = "Identifiant") @PathVariable Long id,
                           @RequestBody Employe employe) {
@@ -62,10 +55,8 @@ public class EmployeController {
     }
 
     @Operation(summary = "Supprimer un employé")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Employé supprimé"),
-            @ApiResponse(responseCode = "404", description = "Employé introuvable")
-    })
+    @ApiResponse(responseCode = "204", description = "Employé supprimé")
+    @ApiResponse(responseCode = "404", description = "Employé introuvable")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@Parameter(description = "Identifiant") @PathVariable Long id) {

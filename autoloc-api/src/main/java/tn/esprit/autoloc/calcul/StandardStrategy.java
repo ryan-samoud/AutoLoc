@@ -2,7 +2,7 @@ package tn.esprit.autoloc.calcul;
 
 import org.springframework.stereotype.Component;
 
-@Component("STANDARD")
+@Component("standard")
 public class StandardStrategy implements OffreStrategy {
 
     @Override

@@ -3,7 +3,6 @@ package tn.esprit.autoloc.service;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.autoloc.Utils;
 import tn.esprit.autoloc.domain.Client;
 import tn.esprit.autoloc.repository.IClientRepository;

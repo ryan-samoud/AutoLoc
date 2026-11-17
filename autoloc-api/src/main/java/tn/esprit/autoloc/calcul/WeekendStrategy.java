@@ -2,7 +2,7 @@ package tn.esprit.autoloc.calcul;
 
 import org.springframework.stereotype.Component;
 
-@Component("WEEKEND")
+@Component("weekend")
 public class WeekendStrategy implements OffreStrategy {
 
     @Override

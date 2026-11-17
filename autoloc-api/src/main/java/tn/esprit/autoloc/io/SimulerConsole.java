@@ -1,5 +1,7 @@
 package tn.esprit.autoloc.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import tn.esprit.autoloc.calcul.VehiculeOffre;
@@ -12,6 +14,8 @@ import tn.esprit.autoloc.service.ISimuler;
  */
 @Component
 public class SimulerConsole implements ISimuler {
+
+    private static final Logger log = LoggerFactory.getLogger(SimulerConsole.class);
 
     private static final String PREFIXE_TOTAL = "total des tarifs des vehicules: ";
 
@@ -29,7 +33,7 @@ public class SimulerConsole implements ISimuler {
         String entete = rapport.substring(0, dernierSaut);
         String ligneTotal = rapport.substring(dernierSaut + 1);
 
-        System.out.println(entete);
+        log.info("{}", entete);
         return ligneTotal.startsWith(PREFIXE_TOTAL)
                 ? ligneTotal.substring(PREFIXE_TOTAL.length())
                 : ligneTotal;

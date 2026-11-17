@@ -3,7 +3,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,20 +28,16 @@ public class MaintenanceController {
     }
 
     @Operation(summary = "Consulter une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Maintenance trouvée"),
-            @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Maintenance trouvée")
+    @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
     @GetMapping("/{id}")
     public Maintenance findById(@Parameter(description = "Identifiant") @PathVariable Long id) {
         return maintenanceService.findById(id);
     }
 
     @Operation(summary = "Ajouter une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Maintenance créée"),
-            @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
-    })
+    @ApiResponse(responseCode = "201", description = "Maintenance créée")
+    @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Maintenance create(@RequestBody Maintenance maintenance) {
@@ -50,11 +45,9 @@ public class MaintenanceController {
     }
 
     @Operation(summary = "Modifier une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Maintenance modifiée"),
-            @ApiResponse(responseCode = "400", description = "Données invalides"),
-            @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Maintenance modifiée")
+    @ApiResponse(responseCode = "400", description = "Données invalides")
+    @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
     @PutMapping("/{id}")
     public Maintenance update(@Parameter(description = "Identifiant") @PathVariable Long id,
                               @RequestBody Maintenance maintenance) {
@@ -62,10 +55,8 @@ public class MaintenanceController {
     }
 
     @Operation(summary = "Supprimer une maintenance")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Maintenance supprimée"),
-            @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
-    })
+    @ApiResponse(responseCode = "204", description = "Maintenance supprimée")
+    @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@Parameter(description = "Identifiant") @PathVariable Long id) {

@@ -13,7 +13,7 @@ import java.util.List;
 @Service //annotation bean
 @RequiredArgsConstructor //annotation Lombok
 public class BasicAgenceServiceImpl implements IAgenceService {
-    final private IAgenceRepository repository;
+    private final IAgenceRepository repository;
 
     @Override
     public boolean check(Agence agence, boolean isNew) {

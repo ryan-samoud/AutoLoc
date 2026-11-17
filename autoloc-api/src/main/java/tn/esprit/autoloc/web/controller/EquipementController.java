@@ -3,7 +3,6 @@ package tn.esprit.autoloc.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,20 +28,16 @@ public class EquipementController {
     }
 
     @Operation(summary = "Consulter un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Équipement trouvé"),
-            @ApiResponse(responseCode = "404", description = "Équipement introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Équipement trouvé")
+    @ApiResponse(responseCode = "404", description = "Équipement introuvable")
     @GetMapping("/{id}")
     public Equipement findById(@Parameter(description = "Identifiant") @PathVariable Long id) {
         return equipementService.findById(id);
     }
 
     @Operation(summary = "Ajouter un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Équipement créé"),
-            @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
-    })
+    @ApiResponse(responseCode = "201", description = "Équipement créé")
+    @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Equipement create(@RequestBody Equipement equipement) {
@@ -50,11 +45,9 @@ public class EquipementController {
     }
 
     @Operation(summary = "Modifier un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Équipement modifié"),
-            @ApiResponse(responseCode = "400", description = "Données invalides"),
-            @ApiResponse(responseCode = "404", description = "Équipement introuvable")
-    })
+    @ApiResponse(responseCode = "200", description = "Équipement modifié")
+    @ApiResponse(responseCode = "400", description = "Données invalides")
+    @ApiResponse(responseCode = "404", description = "Équipement introuvable")
     @PutMapping("/{id}")
     public Equipement update(@Parameter(description = "Identifiant") @PathVariable Long id,
                              @RequestBody Equipement equipement) {
@@ -62,10 +55,8 @@ public class EquipementController {
     }
 
     @Operation(summary = "Supprimer un équipement")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Équipement supprimé"),
-            @ApiResponse(responseCode = "404", description = "Équipement introuvable")
-    })
+    @ApiResponse(responseCode = "204", description = "Équipement supprimé")
+    @ApiResponse(responseCode = "404", description = "Équipement introuvable")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@Parameter(description = "Identifiant") @PathVariable Long id) {
