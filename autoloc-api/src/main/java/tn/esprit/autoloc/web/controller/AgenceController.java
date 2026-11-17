@@ -14,6 +14,7 @@ import tn.esprit.autoloc.io.SimulerFactory;
 import tn.esprit.autoloc.io.TypeRapport;
 import tn.esprit.autoloc.service.IAgenceService;
 import tn.esprit.autoloc.service.ISimuler;
+import tn.esprit.autoloc.web.dto.AgenceEmployesRequest;
 
 
 import java.util.List;
@@ -92,5 +93,16 @@ public class AgenceController {
                           @RequestParam(defaultValue = "TEXTE") TypeRapport rapport) {
         return simulerFactory.creer(rapport)
                 .simuler(agenceService.findById(id), jours, offre);
+    }
+    @Operation(summary = "Mettre à jour une agence et lui ajouter des employés")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agence mise à jour avec ses employés"),
+            @ApiResponse(responseCode = "400", description = "Liste vide ou données invalides"),
+            @ApiResponse(responseCode = "404", description = "Agence introuvable")
+    })
+    @PostMapping("/{id}/employes")
+    public Agence ajouterEmployes(@PathVariable Long id,
+                                  @RequestBody AgenceEmployesRequest request) {
+        return agenceService.ajouterEmployes(id, request.agence(), request.employes());
     }
 }

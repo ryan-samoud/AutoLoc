@@ -26,4 +26,15 @@ public class Employe {
 
     @ManyToOne
     private Agence agence;
+
+    // Point d'entrée côté Employe : délègue à Agence pour garder les deux côtés cohérents
+    public void affecterAgence(Agence nouvelle) {
+        if (nouvelle == null) {
+            if (agence != null) {
+                agence.removeEmploye(this);
+            }
+        } else {
+            nouvelle.addEmploye(this);
+        }
+    }
 }

@@ -71,4 +71,19 @@ public class VehiculeController {
     public void deleteById(@Parameter(description = "Identifiant") @PathVariable Long id) {
         vehiculeService.deleteById(id);
     }
+
+    @PutMapping("desaffecter/{id}")
+    public Vehicule desaffecter(@PathVariable Long id) {
+        return vehiculeService.desaffecter(id);
+    }
+
+    @PutMapping("affecter/{id}/{idAgence}")
+    public Vehicule affecter(@PathVariable Long id,@PathVariable Long idAgence) {
+        return vehiculeService.affecter(id,idAgence);
+    }
+
+    @PutMapping("affecterequipement/{id}/{idEqipement}")
+    public Vehicule affecterequipement(@PathVariable Long id,@PathVariable("idEqipement") Long idEquipement) {
+        return vehiculeService.affecterequipement(id,idEquipement);
+    }
 }

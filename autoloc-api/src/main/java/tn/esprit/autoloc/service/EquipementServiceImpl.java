@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.autoloc.Utils;
 import tn.esprit.autoloc.domain.Equipement;
+import tn.esprit.autoloc.domain.Vehicule;                 // added
 import tn.esprit.autoloc.repository.IEquipementRepository;
 
 @Service
@@ -35,4 +36,15 @@ public class EquipementServiceImpl extends GenericServiceImpl<Equipement, Long> 
         return Utils.isNotEmpty(equipement.getLibelle());
     }
 
+    @Override                                              // added
+    @Transactional
+    public void deleteById(Long id) {
+        Equipement equipement = findById(id);              // 404 if missing
+        if (equipement.getVehicule() != null) {
+            for (Vehicule v : equipement.getVehicule()) {
+                v.getEquipement().remove(equipement);
+            }
+        }
+        repository.delete(equipement);
+    }
 }
