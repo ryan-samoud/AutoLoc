@@ -1,8 +1,9 @@
 package tn.esprit.autoloc;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.CategorieVehicule;
 import tn.esprit.autoloc.domain.StatutVehicule;
@@ -20,13 +20,15 @@ import tn.esprit.autoloc.repository.IAgenceRepository;
 import tn.esprit.autoloc.service.IAgenceService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class AgenceTests {
+class AgenceTests {
+
+    private static final Logger log = LoggerFactory.getLogger(AgenceTests.class);
+
     @Autowired
     private AgenceRepositoryMock basicAgenceRepository;
 
@@ -36,17 +38,17 @@ public class AgenceTests {
     @Autowired
     private IAgenceService agenceService;
 
-    private void AddAgence(CrudRepository<Agence,Long> repository){
-        Agence agence= new Agence();
+    private Agence addAgence(CrudRepository<Agence, Long> repository) {
+        Agence agence = new Agence();
         agence.setAdresse("1 Rue Hedi");
         agence.setNom("Agence ariana");
         agence.setTelephone("71585874");
         agence.setVille("Tunis");
-        int ms = (int)System.currentTimeMillis();
+        long ms = System.nanoTime() % 1_000_000_000L;
 
         Vehicule v1 = new Vehicule();
         v1.setCategorie(CategorieVehicule.SUV);
-        v1.setImmatriculation("785414TU96"+ms);
+        v1.setImmatriculation("785414TU96" + ms);
         v1.setMarque("Isuzu");
         v1.setModele("DMax");
         v1.setStatut(StatutVehicule.MAINTENANCE);
@@ -55,7 +57,7 @@ public class AgenceTests {
 
         Vehicule v2 = new Vehicule();
         v2.setCategorie(CategorieVehicule.UTILITAIRE);
-        v2.setImmatriculation("785414TU95"+ms);
+        v2.setImmatriculation("785414TU95" + ms);
         v2.setMarque("Toyota");
         v2.setModele("Yaris");
         v2.setStatut(StatutVehicule.DISPONIBLE);
@@ -64,21 +66,29 @@ public class AgenceTests {
 
         agence.setVehicule(Set.of(v1, v2));
 
-        repository.save(agence);
-    }
-    @Test
-    public void basicAddAgence(){
-        AddAgence(basicAgenceRepository);
+        return repository.save(agence);
     }
 
     @Test
-    public void fullAddAgence(){
-        AddAgence(fullAgenceRepository);
+    void basicAddAgence() {
+        Agence saved = addAgence(basicAgenceRepository);
+        Assertions.assertNotNull(saved.getIdAgence());
+        Assertions.assertTrue(basicAgenceRepository.existsById(saved.getIdAgence()));
     }
 
-    public class Builder {
+    @Test
+    void fullAddAgence() {
+        Agence saved = addAgence(fullAgenceRepository);
+        Assertions.assertNotNull(saved.getIdAgence());
+        Assertions.assertTrue(fullAgenceRepository.existsById(saved.getIdAgence()));
+    }
 
-        public static String build(Agence agence) {
+    static class Builder {
+
+        private Builder() {
+        }
+
+        static String build(Agence agence) {
             StringBuilder sb = new StringBuilder();
             sb.append("\n").append(agence.getIdAgence()).append("|");
             sb.append(agence.getNom()).append("\n");
@@ -92,44 +102,58 @@ public class AgenceTests {
         }
     }
 
+    private void loadAgence(CrudRepository<Agence, Long> repository, String label) {
+        Agence saved = addAgence(repository);
 
-    private void loadAgence(CrudRepository<Agence,Long> repository,String label) {
+        List<Agence> all = new ArrayList<>();
+        repository.findAll().forEach(all::add);
+
         StringBuilder sb = new StringBuilder();
         sb.append("TYPE =").append(label).append("\n");
+        all.forEach(agence -> sb.append(Builder.build(agence)));
+        log.info("{}", sb);
 
-        repository.findAll().forEach(agence -> sb.append(Builder.build(agence)));
-
-        Assert.fail(sb.toString());
+        Assertions.assertTrue(all.stream().anyMatch(a -> a.getIdAgence().equals(saved.getIdAgence())));
     }
 
     @Test
-    public void basicLoadAgence(){
+    void basicLoadAgence() {
         loadAgence(basicAgenceRepository, "basic");
     }
 
     @Test
-    public void fullLoadAgence(){
+    void fullLoadAgence() {
         loadAgence(fullAgenceRepository, "full");
     }
 
     @Test
-    public void loadSortedAgences() {
-        StringBuilder sb = new StringBuilder();
+    void loadSortedAgences() {
+        addAgence(fullAgenceRepository);
+        addAgence(fullAgenceRepository);
 
         List<Agence> agences = fullAgenceRepository.findAll(Sort.by("idAgence").descending());
 
+        StringBuilder sb = new StringBuilder();
         for (Agence agence : agences) {
             sb.append(agence.getIdAgence()).append(" | ").append(agence.getNom()).append("\n");
         }
+        log.info("{}", sb);
 
-        Assert.fail(sb.toString());
+        Assertions.assertTrue(agences.size() >= 2);
+        for (int i = 1; i < agences.size(); i++) {
+            Assertions.assertTrue(agences.get(i - 1).getIdAgence() > agences.get(i).getIdAgence());
+        }
     }
 
     @Test
-    public void loadPagedAgences() {
-        StringBuilder sb = new StringBuilder();
+    void loadPagedAgences() {
+        addAgence(fullAgenceRepository);
+        addAgence(fullAgenceRepository);
+        addAgence(fullAgenceRepository);
 
+        StringBuilder sb = new StringBuilder();
         int currentPage = 0;
+        int totalElements = 0;
         Page<Agence> page;
         boolean first = true;
 
@@ -148,14 +172,17 @@ public class AgenceTests {
                 sb.append(agence.getIdAgence()).append(" | ").append(agence.getNom()).append("\n");
             }
 
+            Assertions.assertTrue(page.getContent().size() <= 2);
+            totalElements += page.getContent().size();
             currentPage++;
         } while (currentPage < page.getTotalPages());
 
-        Assert.fail(sb.toString());
+        log.info("{}", sb);
+        Assertions.assertTrue(totalElements >= 3);
     }
 
     @Test
-    public void createAgence() {
+    void createAgence() {
         Agence agence = Agence.builder()
                 .nom("nom")
                 .telephone("95811925")
@@ -163,11 +190,11 @@ public class AgenceTests {
                 .ville("Tunis")
                 .build();
         Agence created = agenceService.create(agence);
-        org.junit.Assert.assertNotNull(created);
-        org.junit.Assert.assertNotNull(created.getIdAgence());
-
-
+        Assertions.assertNotNull(created);
+        Assertions.assertNotNull(created.getIdAgence());
     }
 }
+
 @Repository
-interface AgenceRepositoryMock extends CrudRepository<Agence, Long> {}
+interface AgenceRepositoryMock extends CrudRepository<Agence, Long> {
+}

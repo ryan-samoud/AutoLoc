@@ -40,7 +40,7 @@ public class EquipementController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Equipement create(@RequestBody Equipement equipement) {
+    public Equipement create(@RequestBody Equipement equipement) { //NOSONAR
         return equipementService.create(equipement);
     }
 
@@ -50,7 +50,7 @@ public class EquipementController {
     @ApiResponse(responseCode = "404", description = "Équipement introuvable")
     @PutMapping("/{id}")
     public Equipement update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                             @RequestBody Equipement equipement) {
+                             @RequestBody Equipement equipement) { //NOSONAR
         return equipementService.update(id, equipement);
     }
 

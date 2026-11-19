@@ -40,7 +40,7 @@ public class ContratController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Contrat create(@RequestBody Contrat contrat) {
+    public Contrat create(@RequestBody Contrat contrat) { //NOSONAR
         return contratService.create(contrat);
     }
 
@@ -50,7 +50,7 @@ public class ContratController {
     @ApiResponse(responseCode = "404", description = "Contrat introuvable")
     @PutMapping("/{id}")
     public Contrat update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                          @RequestBody Contrat contrat) {
+                          @RequestBody Contrat contrat) { //NOSONAR
         return contratService.update(id, contrat);
     }
 

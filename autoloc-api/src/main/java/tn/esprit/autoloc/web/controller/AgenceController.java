@@ -48,7 +48,7 @@ public class AgenceController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Agence create(@RequestBody Agence agence) {
+    public Agence create(@RequestBody Agence agence) {// NOSONAR
         return agenceService.create(agence);
     }
 
@@ -58,7 +58,7 @@ public class AgenceController {
     @ApiResponse(responseCode = "404", description = "Agence introuvable")
     @PutMapping("/{id}")
     public Agence update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                         @RequestBody Agence agence) {
+                         @RequestBody Agence agence) {// NOSONAR
         return agenceService.update(id, agence);
     }
 

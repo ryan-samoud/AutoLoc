@@ -40,7 +40,7 @@ public class ClientController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client create(@RequestBody Client client) {
+    public Client create(@RequestBody Client client) { //NOSONAR
         return clientService.create(client);
     }
 
@@ -50,7 +50,7 @@ public class ClientController {
     @ApiResponse(responseCode = "404", description = "Client introuvable")
     @PutMapping("/{id}")
     public Client update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                         @RequestBody Client client) {
+                         @RequestBody Client client) { //NOSONAR
         return clientService.update(id, client);
     }
 

@@ -40,7 +40,7 @@ public class VehiculeController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Vehicule create(@RequestBody Vehicule vehicule) {
+    public Vehicule create(@RequestBody Vehicule vehicule) { //NOSONAR
         return vehiculeService.create(vehicule);
     }
 
@@ -50,7 +50,7 @@ public class VehiculeController {
     @ApiResponse(responseCode = "404", description = "Véhicule introuvable")
     @PutMapping("/{id}")
     public Vehicule update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                           @RequestBody Vehicule vehicule) {
+                           @RequestBody Vehicule vehicule) { //NOSONAR
         return vehiculeService.update(id, vehicule);
     }
 

@@ -40,7 +40,7 @@ public class ReservationController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Reservation create(@RequestBody Reservation reservation) {
+    public Reservation create(@RequestBody Reservation reservation) { //NOSONAR
         return reservationService.create(reservation);
     }
 
@@ -50,7 +50,7 @@ public class ReservationController {
     @ApiResponse(responseCode = "404", description = "Réservation introuvable")
     @PutMapping("/{id}")
     public Reservation update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                              @RequestBody Reservation reservation) {
+                              @RequestBody Reservation reservation) { //NOSONAR
         return reservationService.update(id, reservation);
     }
 

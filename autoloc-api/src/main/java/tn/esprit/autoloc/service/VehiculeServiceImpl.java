@@ -71,7 +71,7 @@ public class VehiculeServiceImpl extends GenericServiceImpl<Vehicule, Long> impl
         if (offre == null) {
             throw new IllegalArgumentException("l'offre est obligatoire");
         }
-        OffreStrategy strategy = strategies.get(offre.name());
+        OffreStrategy strategy = strategies.get(offre.getBeanName());
         if (strategy == null) {
             throw new IllegalArgumentException("offre non supportee : " + offre);
         }

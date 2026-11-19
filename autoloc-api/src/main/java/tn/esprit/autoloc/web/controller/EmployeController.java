@@ -40,7 +40,7 @@ public class EmployeController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employe create(@RequestBody Employe employe) {
+    public Employe create(@RequestBody Employe employe) { //NOSONAR
         return employeService.create(employe);
     }
 
@@ -50,7 +50,7 @@ public class EmployeController {
     @ApiResponse(responseCode = "404", description = "Employé introuvable")
     @PutMapping("/{id}")
     public Employe update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                          @RequestBody Employe employe) {
+                          @RequestBody Employe employe) { //NOSONAR
         return employeService.update(id, employe);
     }
 

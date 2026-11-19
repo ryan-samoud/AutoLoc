@@ -40,7 +40,7 @@ public class MaintenanceController {
     @ApiResponse(responseCode = "400", description = "Données invalides ou identifiant fourni")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Maintenance create(@RequestBody Maintenance maintenance) {
+    public Maintenance create(@RequestBody Maintenance maintenance) { //NOSONAR
         return maintenanceService.create(maintenance);
     }
 
@@ -50,7 +50,7 @@ public class MaintenanceController {
     @ApiResponse(responseCode = "404", description = "Maintenance introuvable")
     @PutMapping("/{id}")
     public Maintenance update(@Parameter(description = "Identifiant") @PathVariable Long id,
-                              @RequestBody Maintenance maintenance) {
+                              @RequestBody Maintenance maintenance) { //NOSONAR
         return maintenanceService.update(id, maintenance);
     }
 

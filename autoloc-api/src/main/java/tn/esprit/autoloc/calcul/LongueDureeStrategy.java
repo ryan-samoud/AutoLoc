@@ -2,7 +2,7 @@ package tn.esprit.autoloc.calcul;
 
 import org.springframework.stereotype.Component;
 
-@Component("longueduree")
+@Component("longueDuree")
 public class LongueDureeStrategy implements OffreStrategy {
 
     @Override
